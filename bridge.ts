@@ -1,0 +1,15 @@
+import { createServer } from "node:net";
+import { Aedes } from "aedes";
+
+const port = 1883;
+
+const aedes = await Aedes.createBroker();
+const server = createServer(aedes.handle);
+
+server.listen(port, function () {
+  console.log("server started and listening on port ", port);
+});
+
+aedes.on("publish", async (packet, client) => {
+  console.log(JSON.stringify(packet), client);
+});

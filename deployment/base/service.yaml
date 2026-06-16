@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: chirpstack-bridge
+spec:
+  selector:
+    app: chirpstack-bridge
+  ports:
+    - name: mqtt
+      protocol: TCP
+      port: 1883
+      targetPort: 1883
+  type: LoadBalancer
