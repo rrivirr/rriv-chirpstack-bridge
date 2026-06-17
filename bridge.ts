@@ -13,7 +13,7 @@ server.listen(port, function () {
 });
 
 aedes.on("publish", async (packet, client) => {
-  if (packet.topic.startsWith("us915_1/gateway/")) {
+  if (packet.topic.includes("/gateway/")) {
     await mqttClient.publishAsync(packet.topic, packet.payload);
   }
 });
