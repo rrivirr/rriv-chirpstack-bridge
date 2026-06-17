@@ -2,7 +2,7 @@
 echo 'username and password are both a DO token with access to the registry'
 docker login registry.digitalocean.com
 TAG=registry.digitalocean.com/rriv/chirpstack-bridge:$1
-docker build . -t $TAG
+docker buildx build --platform linux/amd64 . -t $TAG
 docker push $TAG
 
 cd deployment/overlays/development

@@ -1,6 +1,8 @@
 import { createServer } from "node:net";
 import { Aedes } from "aedes";
+import mqtt from "mqtt";
 
+const mqttClient = await mqtt.connectAsync("http://mosquitto");
 const port = 1883;
 
 const aedes = await Aedes.createBroker();
@@ -11,5 +13,7 @@ server.listen(port, function () {
 });
 
 aedes.on("publish", async (packet, client) => {
-  console.log(JSON.stringify(packet), client);
+  if (packet.topic.startsWith("us915_1/gateway/")) {
+    await mqttClient.publishAsync(packet.topic, packet.payload);
+  }
 });
